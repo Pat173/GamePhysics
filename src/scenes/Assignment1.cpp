@@ -28,7 +28,7 @@ void Assignment1::Draw() {
 
 void Assignment1::DrawGUI() {
     ImGui::Begin("Inspector");
-    // ImGui::DragFloat2("Circle Position", &circle.circlePosition[0], 0.1f);
-    // ImGui::DragFloat("Circle Radius", &circle.circleRadius, 0.1f);
+    ImGui::DragFloat2("Circle Position", &circle.circlePosition[0], 0.1f);
+    ImGui::DragFloat("Circle Radius", &circle.circleRadius, 0.1f);
     ImGui::End();
 }
