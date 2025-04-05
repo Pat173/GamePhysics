@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-
+#include <vector>
 #include "core/Simple2DScene.h"
 #include "objects/Circle.h"
 
@@ -19,5 +19,5 @@ public:
     virtual const char* GetName() override { return "Assignment1 Scene"; }
 
 private:
-    Circle circle;
+    std::vector<Circle> m_circles = std::vector<Circle>();
 };
