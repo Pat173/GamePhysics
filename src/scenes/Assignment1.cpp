@@ -29,6 +29,9 @@ void Assignment1::Update(float deltaTime)
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
 
+        //if (Input::IsMouseDown(0) == true)
+
+
         if (m_circles[i].circlePosition.x < -5)
         {
             glm::vec2 forcefield = glm::vec2(200, 200);
@@ -52,6 +55,9 @@ void Assignment1::Draw() {
     Draw::Line(glm::vec2(-bounds, -bounds), glm::vec2(-bounds, bounds));
     Draw::Line(glm::vec2(-bounds, bounds), glm::vec2(bounds, bounds));
     Draw::Line(glm::vec2(bounds, -bounds), glm::vec2(bounds, bounds));
+
+    Draw::Circle(Input::GetMousePos(), 2, true);
+
 }
 
 void Assignment1::DrawGUI() {
