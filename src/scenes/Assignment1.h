@@ -20,4 +20,6 @@ public:
 
 private:
     std::vector<Circle> m_circles = std::vector<Circle>();
+    glm::vec2 m_gravity = glm::vec2(0, -9.81);
+    float bounds = 20;
 };

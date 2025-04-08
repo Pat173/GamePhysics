@@ -9,9 +9,10 @@ Assignment1::~Assignment1() {}
 
 void Assignment1::OnEnable()
 {
-    Circle circle1 = Circle(1, glm::vec2(0, 0), glm::vec2(5, -9.81f));
-    Circle circle2 = Circle(0.5f, glm::vec2(-2, 2), glm::vec2(-6, -9.81f));
-    Circle circle3 = Circle(2, glm::vec2(2, 2), glm::vec2(-3, 3));
+    Circle circle1 =
+        Circle(1, glm::vec2(0, 0), glm::vec2(3, 3), glm::vec2(0, -9.81f));
+    Circle circle2 = Circle(0.5f, glm::vec2(-1,1) , glm::vec2(-4, 0), glm::vec2(0, -9.81f));
+    Circle circle3 = Circle(2, glm::vec2(1,2) , glm::vec2(2, 6), glm::vec2(0, -9.81));
 
     m_circles.push_back(circle1);
     m_circles.push_back(circle2);
@@ -24,7 +25,17 @@ void Assignment1::OnDisable() {}
 void Assignment1::Update(float deltaTime)
 {
     for (int i = 0; i < m_circles.size(); i++) {
-        m_circles[i].Update(deltaTime, 5, 5);
+
+        std::vector<glm::vec2> forces{};
+        forces.push_back(m_gravity * m_circles[i].mass);
+
+        if (m_circles[i].circlePosition.x < -5)
+        {
+            glm::vec2 forcefield = glm::vec2(200, 200);
+            forces.push_back(forcefield);
+        }
+
+        m_circles[i].Update(deltaTime, bounds, bounds, forces);
     }
 
 }
@@ -37,10 +48,10 @@ void Assignment1::Draw() {
     }
 
     
-    Draw::Line(glm::vec2(-5, -5), glm::vec2(5, -5));
-    Draw::Line(glm::vec2(-5, -5), glm::vec2(-5, 5));
-    Draw::Line(glm::vec2(-5, 5), glm::vec2(5, 5));
-    Draw::Line(glm::vec2(5, -5), glm::vec2(5, 5));
+    Draw::Line(glm::vec2(-bounds, -bounds), glm::vec2(bounds, -bounds));
+    Draw::Line(glm::vec2(-bounds, -bounds), glm::vec2(-bounds, bounds));
+    Draw::Line(glm::vec2(-bounds, bounds), glm::vec2(bounds, bounds));
+    Draw::Line(glm::vec2(bounds, -bounds), glm::vec2(bounds, bounds));
 }
 
 void Assignment1::DrawGUI() {
