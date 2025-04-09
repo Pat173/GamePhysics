@@ -1,12 +1,11 @@
+#pragma once
 #include "core/Application.h"
 #include "core/Math.h"
 
 class Circle
 {
-
-
 	public:
-		Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration);
+		 Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration);
         ~Circle();
 	void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces);
 

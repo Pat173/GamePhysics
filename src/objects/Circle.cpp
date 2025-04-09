@@ -1,7 +1,8 @@
 #include "Circle.h"
 #include "core/Math.h"
 
-Circle::Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration) : circleRadius(radius), circlePosition(startPos), velocity(startVelocity), acceleration(startAcceleration){}
+Circle::Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration) :
+    circleRadius(radius), circlePosition(startPos), velocity(startVelocity), acceleration(startAcceleration){}
 
 Circle::~Circle(){};
 
