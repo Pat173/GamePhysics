@@ -1,5 +1,4 @@
 #include "Assignment2.h"
-
 #include "core/Draw.h"
 #include "imgui.h"
 
@@ -28,11 +27,11 @@ void Assignment2::Update(float deltaTime) {
         forces.push_back(m_gravity * m_circles[i].mass);
 
         // if (Input::IsMouseDown(0) == true)
-
+        /*
         if (m_circles[i].circlePosition.x < -5) {
             glm::vec2 forcefield = glm::vec2(200, 200);
             forces.push_back(forcefield);
-        }
+        }*/
 
         m_circles[i].Update(deltaTime, bounds, bounds, forces);
     }
@@ -49,7 +48,8 @@ void Assignment2::Draw() {
     Draw::Line(glm::vec2(-bounds, bounds), glm::vec2(bounds, bounds));
     Draw::Line(glm::vec2(bounds, -bounds), glm::vec2(bounds, bounds));
 
-    Draw::Circle(Input::GetMousePos(), 2, true);
+    Draw::SetColor(ImColor(255,0,0,255));
+    Draw::Circle(Input::GetMousePos(), 1.5f, false);
 }
 
 void Assignment2::DrawGUI() {

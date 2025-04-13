@@ -1,5 +1,8 @@
 #include "Circle.h"
 #include "core/Math.h"
+#include "core/Draw.h"
+#include "imgui.h"
+#include "scenes/Assignment2.h"
 
 Circle::Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration) :
     circleRadius(radius), circlePosition(startPos), velocity(startVelocity), acceleration(startAcceleration){}
@@ -46,5 +49,11 @@ void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std
         circlePosition.x = -screenWidth + circleRadius;
     }
 
+    glm::vec2 mousePos = Input::GetMousePos();
+    float distance = glm::length(mousePos - circlePosition);
+
+    if (Input::IsMouseDown(0) && distance <= circleRadius) {
+        velocity.x += (100 / mass);
+    }
 
 }
