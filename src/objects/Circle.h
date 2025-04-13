@@ -8,7 +8,9 @@ class Circle
 	public:
 		 Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration);
         ~Circle();
-	void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces);
+    void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces);
+	void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection);
+
 
         glm::vec2 circlePosition;
         float circleRadius;

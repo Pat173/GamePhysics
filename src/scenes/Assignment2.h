@@ -20,6 +20,12 @@ public:
     glm::vec2 GetVectorDirection();
 
 private:
+
+    void PredictTrajectoryWithBounces(const Circle& circle,
+                                      const glm::vec2& appliedImpulse,
+                                      int steps,
+                                      float dt);
+
     std::vector<Circle> m_circles = std::vector<Circle>();
     glm::vec2 m_gravity = glm::vec2(0, -9.81);
     float bounds = 20;

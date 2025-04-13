@@ -10,13 +10,15 @@ Circle::Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::v
 
 Circle::~Circle(){};
 
-void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces) 
-{
+void Circle::Update(float deltaTime,
+                    float screenHeight,
+                    float screenWidth,
+                    std::vector<glm::vec2> forces) {
+
 
     acceleration = glm::vec2(0, 0);
 
-    for (int i = 0; i < forces.size(); i++)
-    {
+    for (int i = 0; i < forces.size(); i++) {
         glm::vec2 newAcc = forces[i] / mass;
 
         acceleration += newAcc;
@@ -25,30 +27,32 @@ void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std
     velocity = velocity + acceleration * deltaTime;
     circlePosition = circlePosition + velocity * deltaTime;
 
-    if (circlePosition.y > screenHeight - circleRadius)
-    {
+    if (circlePosition.y > screenHeight - circleRadius) {
         velocity.y = -velocity.y;
-       //  acceleration.y = -acceleration.y;
+        //  acceleration.y = -acceleration.y;
         circlePosition.y = screenHeight - circleRadius;
-    } 
-    if (circlePosition.y < -screenHeight + circleRadius) 
-    {
+    }
+    if (circlePosition.y < -screenHeight + circleRadius) {
         velocity.y = -velocity.y;
-       // acceleration.y = -acceleration.y;
+        // acceleration.y = -acceleration.y;
         circlePosition.y = -screenHeight + circleRadius;
-    } 
-    if (circlePosition.x > screenWidth - circleRadius) 
-    {
+    }
+    if (circlePosition.x > screenWidth - circleRadius) {
         velocity.x = -velocity.x;
         acceleration.x = -acceleration.x;
         circlePosition.x = screenWidth - circleRadius;
-    } 
-    if (circlePosition.x < -screenWidth + circleRadius) 
-    {
+    }
+    if (circlePosition.x < -screenWidth + circleRadius) {
         velocity.x = -velocity.x;
         acceleration.x = -acceleration.x;
         circlePosition.x = -screenWidth + circleRadius;
     }
+}
+
+void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection) 
+{
+
+    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
 
     glm::vec2 mousePos = Input::GetMousePos();
     float distance = glm::length(mousePos - circlePosition);
@@ -58,7 +62,8 @@ void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std
     }
     if (Input::IsMouseReleased(0) && m_mouseClicked) {
         m_mouseClicked = false;
-        velocity.x += (100 / mass);
+        velocity.x += ((lineVectorDirection.x * 10 ) / mass);
+        velocity.y += ((lineVectorDirection.y * 10) / mass);
     }
 
 }

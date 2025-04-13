@@ -26,7 +26,7 @@ void Assignment2::Update(float deltaTime) {
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
 
-        m_circles[i].Update(deltaTime, bounds, bounds, forces);
+        m_circles[i].Update(deltaTime, bounds, bounds, forces, -GetVectorDirection());
     }
 
 
@@ -42,7 +42,12 @@ void Assignment2::Update(float deltaTime) {
 void Assignment2::Draw() {
     for (int i = 0; i < m_circles.size(); i++) {
 
-        if (m_circles[i].GetIsMouseClicked() == true) {
+        if (m_circles[i].GetIsMouseClicked()) {
+            glm::vec2 direction = GetVectorDirection();
+            glm::vec2 impulse = (-direction * 10.0f);
+
+            PredictTrajectoryWithBounces(m_circles[i], impulse, 30, 0.25f);
+
             Draw::SetColor(ImColor(0, 255, 0, 255));
         }
 
@@ -71,6 +76,42 @@ glm::vec2 Assignment2::GetVectorDirection() {
     glm::vec2 mousePos = Input::GetMousePos();
 
     return mousePos - m_clickedMousePos;
+}
+
+void Assignment2::PredictTrajectoryWithBounces(const Circle& circle,
+                                               const glm::vec2& appliedImpulse,
+                                               int steps,
+                                               float dt) {
+    glm::vec2 position = circle.circlePosition;
+    glm::vec2 velocity = circle.velocity + appliedImpulse / circle.mass;
+    glm::vec2 acceleration = circle.acceleration;
+    float radius = circle.circleRadius;
+
+    for (int s = 0; s < steps; ++s) {
+        velocity += acceleration * dt;
+        position += velocity * dt;
+
+        if (position.x + radius > bounds) {
+            position.x = bounds - radius;
+            velocity.x *= -1;
+        } else if (position.x - radius < -bounds) {
+            position.x = -bounds + radius;
+            velocity.x *= -1;
+        }
+
+        if (position.y + radius > bounds) {
+            position.y = bounds - radius;
+            velocity.y *= -1;
+        } else if (position.y - radius < -bounds) {
+            position.y = -bounds + radius;
+            velocity.y *= -1;
+        }
+
+        Draw::SetColor(ImColor(0, 255, 0, 125));
+        Draw::Circle(position, radius, false);
+    }
+
+    Draw::SetColor(ImColor(0, 255, 0, 255));
 }
 
 void Assignment2::DrawGUI() {
