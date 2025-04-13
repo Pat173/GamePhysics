@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Application.h"
 #include "core/Math.h"
+#include "core/Input.h"
 
 class Circle
 {
@@ -15,5 +16,8 @@ class Circle
         glm::vec2 velocity = glm::vec2(0, 0);
         float mass = circleRadius * 10;
 
-	private: 
+    bool GetIsMouseClicked() { return m_mouseClicked; }
+
+    private:
+        bool m_mouseClicked = false;
 };
