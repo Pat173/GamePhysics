@@ -4,10 +4,10 @@
 #include "core/Simple2DScene.h"
 #include "objects/Circle.h"
 
-class Assignment2 : public Simple2DScene {
+class Session3 : public Simple2DScene {
 public:
-    Assignment2();
-    ~Assignment2();
+    Session3();
+    ~Session3();
 
     virtual void OnEnable() override;
     virtual void OnDisable() override;
@@ -15,7 +15,7 @@ public:
     virtual void Draw() override;
     virtual void DrawGUI() override;
 
-    virtual const char* GetName() override { return "Assignment2 Scene"; }
+    virtual const char* GetName() override { return "Session3 Scene"; }
 
     glm::vec2 GetVectorDirection();
 

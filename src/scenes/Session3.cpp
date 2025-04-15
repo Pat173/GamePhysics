@@ -1,12 +1,12 @@
-#include "Assignment2.h"
+#include "Session3.h"
 #include "core/Draw.h"
 #include "imgui.h"
 
-Assignment2::Assignment2() {}
+Session3::Session3() {}
 
-Assignment2::~Assignment2() {}
+Session3::~Session3() {}
 
-void Assignment2::OnEnable() {
+void Session3::OnEnable() {
     Circle circle1 =
         Circle(1, glm::vec2(0, 0), glm::vec2(3, 3), glm::vec2(0, -9.81f));
     Circle circle2 = Circle(0.5f, glm::vec2(-1, 1), glm::vec2(-4, 0),
@@ -19,9 +19,9 @@ void Assignment2::OnEnable() {
     m_circles.push_back(circle3);
 }
 
-void Assignment2::OnDisable() {}
+void Session3::OnDisable() {}
 
-void Assignment2::Update(float deltaTime) {
+void Session3::Update(float deltaTime) {
     for (int i = 0; i < m_circles.size(); i++) {
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
@@ -39,8 +39,9 @@ void Assignment2::Update(float deltaTime) {
     }
 }
 
-void Assignment2::Draw() {
+void Session3::Draw() {
     for (int i = 0; i < m_circles.size(); i++) {
+
         if (m_circles[i].GetIsMouseClicked()) {
             glm::vec2 direction = GetVectorDirection();
             glm::vec2 impulse = (-direction * 10.0f);
@@ -50,11 +51,11 @@ void Assignment2::Draw() {
             forces.push_back(m_gravity * m_circles[i].mass);
             futureCircle.UpdateImpulse(0.1f, bounds, bounds, forces, impulse);
 
-            for (int s = 0; s < 30; ++s) {
+             for (int s = 0; s < 30; ++s) {
+
                 Draw::SetColor(ImColor(0, 255, 0, 125));
                 futureCircle.Update(0.1f, bounds, bounds, forces);
-                Draw::Circle(futureCircle.circlePosition,
-                             futureCircle.circleRadius, false);
+                Draw::Circle(futureCircle.circlePosition, futureCircle.circleRadius, false);
             }
 
             Draw::SetColor(ImColor(0, 255, 0, 255));
@@ -70,20 +71,24 @@ void Assignment2::Draw() {
     Draw::Line(glm::vec2(-bounds, bounds), glm::vec2(bounds, bounds));
     Draw::Line(glm::vec2(bounds, -bounds), glm::vec2(bounds, bounds));
 
-    if (m_mouseClicked == true) {
+    if (m_mouseClicked == true)
+    {
         Draw::SetColor(ImColor(255, 0, 0, 255));
         Draw::Line(m_clickedMousePos, Input::GetMousePos());
         Draw::SetColor(ImColor(255, 255, 255, 255));
     }
+
+    
+
 }
 
-glm::vec2 Assignment2::GetVectorDirection() {
+glm::vec2 Session3::GetVectorDirection() {
     glm::vec2 mousePos = Input::GetMousePos();
 
     return mousePos - m_clickedMousePos;
 }
 
-void Assignment2::DrawGUI() {
+void Session3::DrawGUI() {
     ImGui::Begin("Inspector");
     ImGui::End();
 }

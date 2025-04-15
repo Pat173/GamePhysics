@@ -49,6 +49,15 @@ void Circle::Update(float deltaTime,
     }
 }
 
+void Circle::UpdateImpulse(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 impulse) 
+{
+    velocity += impulse / mass;
+    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
+
+
+}
+
+
 void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection) 
 {
 
@@ -67,3 +76,17 @@ void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std
     }
 
 }
+
+Circle& Circle::operator = (const Circle& other) {
+    if (this == &other) return *this;
+
+    circlePosition = other.circlePosition;
+    circleRadius = other.circleRadius;
+    acceleration = other.acceleration;
+    velocity = other.velocity;
+    mass = other.mass;
+
+    return *this;
+}
+
+
