@@ -9,6 +9,7 @@ class Circle
 		 Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration);
         ~Circle();
     void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces);
+    void UpdateArbLine(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces, glm::vec2 lineFromOrigin);
 	void UpdateImpulse(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces, glm::vec2 impulse);
 	void Update(float deltaTime, float screenHeight, float screenWidth, std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection);
         Circle& operator=(const Circle& other);

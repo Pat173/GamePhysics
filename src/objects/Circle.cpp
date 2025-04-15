@@ -57,6 +57,25 @@ void Circle::UpdateImpulse(float deltaTime, float screenHeight, float screenWidt
 
 }
 
+void Circle::UpdateArbLine(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 line) 
+{
+    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
+
+    glm::vec2 normal = glm::normalize(glm::vec2(-line.y, line.x)); 
+
+
+    float dot = glm::dot(circlePosition, normal);
+
+    if (dot < circleRadius)
+    {
+        velocity = glm::reflect(velocity, normal);
+        circlePosition -= normal *(dot - circleRadius);
+
+    }
+
+
+}
+
 
 void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection) 
 {
