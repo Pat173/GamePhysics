@@ -24,5 +24,7 @@ private:
     std::vector<Circle> m_circles = std::vector<Circle>();
     glm::vec2 m_gravity = glm::vec2(0, -9.81);
     float bounds = 20;
-    glm::vec2 line = glm::vec2(8, 13);
+    glm::vec2 startPointLine = glm::vec2(8, 13);
+    glm::vec2 finishPointLine = glm::vec2(-8, 3);
+    glm::vec2 normal;
 };
