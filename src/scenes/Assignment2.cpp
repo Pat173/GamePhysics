@@ -26,7 +26,8 @@ void Assignment2::Update(float deltaTime) {
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
 
-        m_circles[i].Update(deltaTime, bounds, bounds, forces, -GetVectorDirection());
+        m_circles[i].Update(deltaTime, bounds, bounds, forces);
+        m_circles[i].Impulse(-GetVectorDirection());
     }
 
 
@@ -48,7 +49,8 @@ void Assignment2::Draw() {
             Circle futureCircle = m_circles[i];
             std::vector<glm::vec2> forces{};
             forces.push_back(m_gravity * m_circles[i].mass);
-            futureCircle.UpdateImpulse(0.1f, bounds, bounds, forces, impulse);
+            futureCircle.ImpulseSim(impulse);
+            futureCircle.Update(0.1f, bounds, bounds, forces);
 
             for (int s = 0; s < 30; ++s) {
                 Draw::SetColor(ImColor(0, 255, 0, 125));

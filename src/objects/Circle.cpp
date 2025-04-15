@@ -49,10 +49,9 @@ void Circle::Update(float deltaTime,
     }
 }
 
-void Circle::UpdateImpulse(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 impulse) 
+void Circle::ImpulseSim(glm::vec2 impulse) 
 {
     velocity += impulse / mass;
-    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
 
 
 }
@@ -73,10 +72,8 @@ void Circle::UpdateArbLine(float deltaTime, float screenHeight, float screenWidt
 }
 
 
-void Circle::Update(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 lineVectorDirection) 
+void Circle::Impulse( glm::vec2 lineVectorDirection) 
 {
-
-    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
 
     glm::vec2 mousePos = Input::GetMousePos();
     float distance = glm::length(mousePos - circlePosition);

@@ -27,4 +27,6 @@ private:
     glm::vec2 startPointLine = glm::vec2(8, 13);
     glm::vec2 finishPointLine = glm::vec2(-8, 3);
     glm::vec2 normal;
+    bool m_mouseClicked = false;
+    glm::vec2 m_clickedMousePos = glm::vec2(0, 0);
 };
