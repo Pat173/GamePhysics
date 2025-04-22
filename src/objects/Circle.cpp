@@ -47,6 +47,8 @@ void Circle::Update(float deltaTime,
         acceleration.x = -acceleration.x;
         circlePosition.x = -screenWidth + circleRadius;
     }
+
+    velocity *= 1 - 0.05f * deltaTime;
 }
 
 void Circle::ImpulseSim(glm::vec2 impulse) 
@@ -56,13 +58,9 @@ void Circle::ImpulseSim(glm::vec2 impulse)
 
 }
 
-void Circle::UpdateArbLine(float deltaTime,
-                           float screenHeight,
-                           float screenWidth,
-                           std::vector<glm::vec2> forces,
+void Circle::UpdateArbLine(
                            glm::vec2 lineDir,
                            glm::vec2 lineEnd) {
-    Circle::Update(deltaTime, screenHeight, screenWidth, forces);
 
     glm::vec2 lineStart = lineEnd - lineDir;
     glm::vec2 lineVec = lineEnd - lineStart;
@@ -106,6 +104,11 @@ void Circle::Impulse( glm::vec2 lineVectorDirection)
         velocity.x += ((lineVectorDirection.x * 10 ) / mass);
         velocity.y += ((lineVectorDirection.y * 10) / mass);
     }
+
+}
+
+void Circle::TestCircleCollision(Circle& other)
+{
 
 }
 

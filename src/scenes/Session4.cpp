@@ -1,12 +1,12 @@
-#include "Session3.h"
+#include "Session4.h"
 #include "core/Draw.h"
 #include "imgui.h"
 
-Session3::Session3() {}
+Session4::Session4() {}
 
-Session3::~Session3() {}
+Session4::~Session4() {}
 
-void Session3::OnEnable() {
+void Session4::OnEnable() {
 
     m_circles.clear();
 
@@ -22,18 +22,28 @@ void Session3::OnEnable() {
     normal = glm::normalize(glm::vec2(-lineOnOrigin.y, lineOnOrigin.x));
 }
 
-void Session3::OnDisable() {}
+void Session4::OnDisable() {}
 
-void Session3::Update(float deltaTime) {
+void Session4::Update(float deltaTime) {
 
     for (int i = 0; i < m_circles.size(); i++) {
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
 
+        for (int j = i + 1; j < m_circles.size(); j++)
+        {
+            m_circles[i].TestCircleCollision(m_circles[j]);
+        }
+
+
         m_circles[i].Update(deltaTime, bounds, bounds, forces);
         m_circles[i].UpdateArbLine( finishPointLine - startPointLine, finishPointLine);
         m_circles[i].Impulse(-GetVectorDirection());
+
+
     }
+
+
 
     if (Input::IsMouseClicked(0) == true) {
         m_mouseClicked = true;
@@ -44,7 +54,7 @@ void Session3::Update(float deltaTime) {
     }
 }
 
-void Session3::Draw() {
+void Session4::Draw() {
     for (int i = 0; i < m_circles.size(); i++) {
 
         if (m_circles[i].GetIsMouseClicked()) {
@@ -97,13 +107,13 @@ void Session3::Draw() {
 
 }
 
-glm::vec2 Session3::GetVectorDirection() {
+glm::vec2 Session4::GetVectorDirection() {
     glm::vec2 mousePos = Input::GetMousePos();
 
     return mousePos - m_clickedMousePos;
 }
 
-void Session3::DrawGUI() {
+void Session4::DrawGUI() {
     ImGui::Begin("Inspector");
     if (ImGui::Button("Reset", ImVec2(100, 33)))
     {
