@@ -56,20 +56,40 @@ void Circle::ImpulseSim(glm::vec2 impulse)
 
 }
 
-void Circle::UpdateArbLine(float deltaTime, float screenHeight, float screenWidth,  std::vector<glm::vec2> forces, glm::vec2 lineDir, glm::vec2 linePoint) 
-{
+void Circle::UpdateArbLine(float deltaTime,
+                           float screenHeight,
+                           float screenWidth,
+                           std::vector<glm::vec2> forces,
+                           glm::vec2 lineDir,
+                           glm::vec2 lineEnd) {
     Circle::Update(deltaTime, screenHeight, screenWidth, forces);
 
-    glm::vec2 normal = glm::normalize(glm::vec2(-lineDir.y, lineDir.x)); 
+    glm::vec2 lineStart = lineEnd - lineDir;
+    glm::vec2 lineVec = lineEnd - lineStart;
+    glm::vec2 normal = glm::normalize(glm::vec2(-lineVec.y, lineVec.x));
 
-    float distance = glm::dot(circlePosition - linePoint, normal);
+    glm::vec2 toCircle = circlePosition - lineStart;
 
-    if (std::abs(distance) < circleRadius)
-    {
-        velocity = glm::reflect(velocity, normal);
-        circlePosition -= normal * (distance - glm::sign(distance) * circleRadius);
+    float t = glm::dot(toCircle, lineVec) / glm::dot(lineVec, lineVec);
+    t = glm::clamp(t, 0.0f, 1.0f); 
+
+    glm::vec2 closestPoint = lineStart + t * lineVec;
+
+    glm::vec2 diff = circlePosition - closestPoint;
+    float distance = glm::length(diff);
+
+    if (distance < circleRadius) {
+        glm::vec2 collisionNormal = glm::normalize(diff);
+
+        if (glm::dot(velocity, collisionNormal) < 0.0f) {
+            velocity = glm::reflect(velocity, collisionNormal);
+        }
+
+
+        circlePosition = closestPoint + collisionNormal * circleRadius;
     }
 }
+
 
 
 void Circle::Impulse( glm::vec2 lineVectorDirection) 
