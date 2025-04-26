@@ -64,14 +64,19 @@ void Session4::Draw() {
             Circle futureCircle = m_circles[i];
             std::vector<glm::vec2> forces{};
             forces.push_back(m_gravity * m_circles[i].mass);
+
             futureCircle.ImpulseSim(impulse);
             futureCircle.Update(0.1f, bounds, bounds, forces);
             futureCircle.UpdateArbLine(finishPointLine - startPointLine, finishPointLine);
 
             for (int s = 0; s < 30; ++s) {
                 Draw::SetColor(ImColor(0, 255, 0, 125));
+
                 futureCircle.Update(0.1f, bounds, bounds, forces);
                 futureCircle.UpdateArbLine(finishPointLine - startPointLine, finishPointLine);
+
+
+
                 Draw::Circle(futureCircle.circlePosition,
                              futureCircle.circleRadius, false);
             }
@@ -117,6 +122,10 @@ void Session4::DrawGUI() {
     ImGui::Begin("Inspector");
     if (ImGui::Button("Reset", ImVec2(100, 33)))
     {
+        OnEnable();
+    }
+
+    if (ImGui::Button("Spawn Ball", ImVec2(100, 33))) {
         OnEnable();
     }
     ImGui::End();

@@ -18,6 +18,9 @@ public:
     virtual const char* GetName() override { return "Session4 Scene"; }
 
     glm::vec2 GetVectorDirection();
+    void SpawnCircle(glm::vec2 position,
+                     glm::vec2 velocity,
+                     glm::vec2 acceleration);
 
 private:
 

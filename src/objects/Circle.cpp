@@ -107,9 +107,44 @@ void Circle::Impulse( glm::vec2 lineVectorDirection)
 
 }
 
-void Circle::TestCircleCollision(Circle& other)
-{
+void Circle::TestCircleCollision(Circle& other) {
+    float dx = other.circlePosition.x - this->circlePosition.x;
+    float dy = other.circlePosition.y - this->circlePosition.y;
+    float distanceSquared = dx * dx + dy * dy;
+    float radiusSum = this->circleRadius + other.circleRadius;
+    float radiusSumSquared = radiusSum * radiusSum;
 
+    if (distanceSquared < radiusSumSquared) {
+        float distance = sqrt(distanceSquared);
+        glm::vec2 collisionNormal = glm::normalize(glm::vec2(dx, dy));
+
+
+
+        if (glm::dot(velocity, collisionNormal) < 0.0f) {
+            velocity = glm::reflect(velocity, collisionNormal);
+        }
+
+        float overlap = radiusSum - distance;
+        circlePosition -= collisionNormal * (overlap / 2.0f);
+        other.circlePosition += collisionNormal * (overlap / 2.0f);
+
+        glm::vec2 relativeVelocity = other.velocity - this->velocity;
+        float velocityAlongNormal = glm::dot(relativeVelocity, collisionNormal);
+
+        if (velocityAlongNormal > 0)
+            return;
+
+        float restitution = 1.0f;
+
+        float impulseMagnitude = -(1.0f + restitution) * velocityAlongNormal;
+        impulseMagnitude /= 2.0f;
+
+        glm::vec2 impulse = impulseMagnitude * collisionNormal;
+
+        this->velocity -= impulse;
+        other.velocity += impulse; 
+
+    }
 }
 
 Circle& Circle::operator = (const Circle& other) {
