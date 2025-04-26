@@ -103,13 +103,6 @@ glm::vec2 Session3::GetVectorDirection() {
     return mousePos - m_clickedMousePos;
 }
 
-void Session3::SpawnCircle(glm::vec2 position,
-                           glm::vec2 velocity,
-                           glm::vec2 acceleration) {
-    Circle circle = Circle(1, position, velocity, acceleration);
-    m_circles.push_back(circle);
-}
-
 void Session3::DrawGUI() {
     ImGui::Begin("Inspector");
     if (ImGui::Button("Reset", ImVec2(100, 33)))

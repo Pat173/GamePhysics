@@ -118,6 +118,15 @@ glm::vec2 Session4::GetVectorDirection() {
     return mousePos - m_clickedMousePos;
 }
 
+void Session4::SpawnCircle(glm::vec2 position,
+                           glm::vec2 velocity,
+                           glm::vec2 acceleration)
+
+{
+    Circle circle = Circle(1, position, velocity, acceleration);
+    m_circles.push_back(circle);
+}
+
 void Session4::DrawGUI() {
     ImGui::Begin("Inspector");
     if (ImGui::Button("Reset", ImVec2(100, 33)))
@@ -126,7 +135,8 @@ void Session4::DrawGUI() {
     }
 
     if (ImGui::Button("Spawn Ball", ImVec2(100, 33))) {
-        OnEnable();
+        SpawnCircle(glm::vec2(0,0), glm::vec2(0,0), glm::vec2(0,0));
     }
+
     ImGui::End();
 }
