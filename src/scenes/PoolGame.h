@@ -3,11 +3,12 @@
 #include <vector>
 #include "core/Simple2DScene.h"
 #include "objects/Circle.h"
+#include "objects/Hole.h"
 
-class Session4 : public Simple2DScene {
+class PoolGame : public Simple2DScene {
 public:
-    Session4();
-    ~Session4();
+    PoolGame();
+    ~PoolGame();
 
     virtual void OnEnable() override;
     virtual void OnDisable() override;
@@ -21,15 +22,25 @@ public:
     void SpawnCircle(glm::vec2 position,
                      glm::vec2 velocity,
                      glm::vec2 acceleration);
+    int Score = 0;
 
 private:
 
     std::vector<Circle> m_circles = std::vector<Circle>();
-    glm::vec2 m_gravity = glm::vec2(0, -9.81);
-    float bounds = 20;
-    glm::vec2 startPointLine = glm::vec2(8, 13);
-    glm::vec2 finishPointLine = glm::vec2(-8, 3);
+    std::vector<Hole> m_holes = std::vector<Hole>();
+
+    glm::vec2 m_gravity = glm::vec2(0, 0);
+    float m_screenHeight = 10;
+    float m_screenWidth = 20;
+    // glm::vec2 startPointLine = glm::vec2(8, 13);
+    // glm::vec2 finishPointLine = glm::vec2(-8, 3);
     glm::vec2 normal;
     bool m_mouseClicked = false;
     glm::vec2 m_clickedMousePos = glm::vec2(0, 0);
+
+    glm::vec2 m_newCirclePos = glm::vec2(0, 0);
+    glm::vec2 m_newCircleVelocity = glm::vec2(0, 0);
+    glm::vec2 m_newCircleAcc = glm::vec2(0, 0);
+
+
 };

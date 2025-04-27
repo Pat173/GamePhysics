@@ -1,12 +1,20 @@
 #include "Circle.h"
+#include "scenes/PoolGame.h"
+#include "Hole.h"
 
 
-Circle::Circle(float radius, glm::vec2 startPos, glm::vec2 startVelocity, glm::vec2 startAcceleration) :
+Circle::Circle(float radius,
+               glm::vec2 startPos,
+               glm::vec2 startVelocity,
+               glm::vec2 startAcceleration,
+               bool isMainBall)
+    :
 
       circleRadius(radius),
       circlePosition(startPos),
       velocity(startVelocity),
-      acceleration(startAcceleration) {}
+      acceleration(startAcceleration),
+      IsMainBall(isMainBall) {}
 
 Circle::~Circle(){};
 
@@ -48,7 +56,7 @@ void Circle::Update(float deltaTime,
         circlePosition.x = -screenWidth + circleRadius;
     }
 
-    velocity *= 1 - 0.05f * deltaTime;
+    velocity *= 1 - m_drag * deltaTime;
 }
 
 void Circle::ImpulseSim(glm::vec2 impulse) 
@@ -101,8 +109,8 @@ void Circle::Impulse( glm::vec2 lineVectorDirection)
     }
     if (Input::IsMouseReleased(0) && m_mouseClicked) {
         m_mouseClicked = false;
-        velocity.x += ((lineVectorDirection.x * 10 ) / mass);
-        velocity.y += ((lineVectorDirection.y * 10) / mass);
+        velocity.x += ((lineVectorDirection.x * 20 ) / mass);
+        velocity.y += ((lineVectorDirection.y * 20) / mass);
     }
 
 }
@@ -143,6 +151,31 @@ void Circle::TestCircleCollision(Circle& other) {
 
         this->velocity -= impulse;
         other.velocity += impulse; 
+
+    }
+}
+
+void Circle::TestScored(Hole& hole, PoolGame& game) {
+    float dx = hole.m_holePosition.x - this->circlePosition.x;
+    float dy = hole.m_holePosition.y - this->circlePosition.y;
+    float distanceSquared = dx * dx + dy * dy;
+    float radiusSum = this->circleRadius + hole.m_holeRadius;
+    float radiusSquared = radiusSum * radiusSum;
+
+    if (distanceSquared < radiusSquared) {
+
+        if (IsMainBall)
+        {
+            game.Score = 0;
+            game.OnEnable();
+
+        }
+        else
+        {
+            game.Score++;
+            ToBeDestroyed = true;
+            circlePosition = glm::vec2(0, 0);
+        }
 
     }
 }
