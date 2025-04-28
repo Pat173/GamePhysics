@@ -25,7 +25,7 @@ class Circle
         glm::vec2 velocity = glm::vec2(0, 0);
         float mass = circleRadius * 10;
         bool IsMainBall = false;
-        bool ToBeDestroyed = false;
+        bool DontConsider = false;
 
     bool GetIsMouseClicked() { return m_mouseClicked; }
 

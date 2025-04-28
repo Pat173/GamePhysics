@@ -52,12 +52,19 @@ void PoolGame::OnDisable() {}
 void PoolGame::Update(float deltaTime) {
 
     for (int i = 0; i < m_circles.size(); i++) {
+
+        if (m_circles[i].DontConsider == true) {
+            continue;
+        }
+
         std::vector<glm::vec2> forces{};
         forces.push_back(m_gravity * m_circles[i].mass);
 
         for (int j = i + 1; j < m_circles.size(); j++)
         {
-            m_circles[i].TestCircleCollision(m_circles[j]);
+            if (m_circles[j].DontConsider == false) {
+                m_circles[i].TestCircleCollision(m_circles[j]);
+            }
         }
         for (int j = 0; j < m_holes.size(); j++) {
             m_circles[i].TestScored(m_holes[j], *this);
@@ -65,7 +72,6 @@ void PoolGame::Update(float deltaTime) {
 
 
         m_circles[i].Update(deltaTime, m_screenHeight, m_screenWidth, forces);
-       // m_circles[i].UpdateArbLine( finishPointLine - startPointLine, finishPointLine);
 
         if (m_circles[i].IsMainBall)
             m_circles[i].Impulse(-GetVectorDirection());
@@ -80,15 +86,14 @@ void PoolGame::Update(float deltaTime) {
         m_clickedMousePos = glm::vec2(0, 0);
         m_mouseClicked = false;
     }
-
-    m_circles.erase(
-        std::remove_if(m_circles.begin(), m_circles.end(),
-                       [](const Circle& c) { return c.ToBeDestroyed; }),
-        m_circles.end());
 }
 
 void PoolGame::Draw() {
     for (int i = 0; i < m_circles.size(); i++) {
+
+        if (m_circles[i].DontConsider == true) {
+            continue;
+        }
 
         if (m_circles[i].GetIsMouseClicked()) {
             glm::vec2 direction = GetVectorDirection();

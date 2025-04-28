@@ -173,8 +173,7 @@ void Circle::TestScored(Hole& hole, PoolGame& game) {
         else
         {
             game.Score++;
-            ToBeDestroyed = true;
-            circlePosition = glm::vec2(0, 0);
+            this->DontConsider = true;
         }
 
     }
